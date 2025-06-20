@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 import psycopg2.extras
 import psycopg2
 import os
@@ -15,7 +15,7 @@ class DB():
         }
     
     # Função para realizar a consulta ao banco de dados PostgreSQL
-    def consulta_postgresql(self, query_sql: str) -> List[dict]:
+    def consulta_postgresql(self, query_sql: str) -> List[Dict]:
         try:
             # Configurações de conexão (substitua com suas credenciais)
             connection = psycopg2.connect(**self.dados_db)
@@ -47,7 +47,7 @@ class DB():
             return None
 
 
-    def consulta_ctmt(self, alimentador) -> List[dict]:
+    def consulta_ctmt(self, alimentador) -> List[Dict]:
         str_sql = f"""
             select 
                 cod_id,
@@ -68,7 +68,7 @@ class DB():
         return dados_ctmt
 
 
-    def consulta_ssdmt(self, ctmt) -> List[dict]:
+    def consulta_ssdmt(self, ctmt) -> List[Dict]:
         str_sql = f"""
             select
                 --ssdmt
@@ -92,7 +92,7 @@ class DB():
         return self.consulta_postgresql(str_sql)
 
 
-    def consulta_untrmt(self, ctmt) -> List[dict]:
+    def consulta_untrmt(self, ctmt) -> List[Dict]:
         str_sql = f"""
             select
                 untrmt.cod_id,
@@ -121,7 +121,7 @@ class DB():
         return self.consulta_postgresql(str_sql)
 
 
-    def consulta_unsemt(self, ctmt) -> List[dict]:
+    def consulta_unsemt(self, ctmt) -> List[Dict]:
         str_sql = f"""
             select
                 cod_id,
@@ -138,7 +138,7 @@ class DB():
         return self.consulta_postgresql(str_sql)
 
 
-    def consulta_unremt(self, ctmt) -> List[dict]:
+    def consulta_unremt(self, ctmt) -> List[Dict]:
         str_sql = f"""
             select
                 unremt.cod_id,
@@ -164,3 +164,35 @@ class DB():
         """
         
         return self.consulta_postgresql(str_sql)
+    
+    
+    def consulta_ucbt(self, ctmt) -> List[Dict]:
+        sql_ucbt = f"""
+            select 
+                pac,
+                ramal,
+                uni_tr_mt,
+                ceg_gd,
+                fas_con,
+                tip_cc,
+                ten_for,
+                car_inst,
+                ene_01,
+                ene_02,
+                ene_03,
+                ene_04,
+                ene_05,
+                ene_06,
+                ene_07,
+                ene_08,
+                ene_09,
+                ene_10,
+                ene_11,
+                ene_12
+            from
+                ucbt
+            where
+                ctmt = '{ctmt}'
+        """
+        
+        return self.consulta_postgresql(sql_ucbt)

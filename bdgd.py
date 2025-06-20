@@ -5,17 +5,11 @@ import consultas as cst
 ''' ====== INI ======'''
 
 alimentador = '012001'
-arquivo = fr"C:\Users\castr\Documents\projetos_python\distribuicao\bdgd_mt\aln{alimentador}.dss"
+
 
 dss = DSS()
+dss.text('Clear')
 rede = CriarRede(dss=dss, aln=alimentador)
 
-with open(arquivo, 'w') as arq:
-    arq.write('clear')
-
-dss.text(f'compile {arquivo}')
-
-aln = rede.db.consulta_ctmt(alimentador)[0]
-trfs = rede.db.consulta_untrmt(aln['cod_id'])
-print(len(trfs))
-print(trfs[10])
+# aln = rede.db.consulta_ctmt(alimentador)[0]
+# trfs = rede.db.consulta_untrmt(aln['cod_id'])
